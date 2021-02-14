@@ -18,6 +18,8 @@ class HomePage(Base):
         1. 选择职业：确定当前职业
         :return:
         """
+        self.context.set_profession(self.profession[0])
+        return
         while True:
             self.draw_text(self.profession)
             # 获取当前职业

@@ -20,5 +20,4 @@ class Indicator:
         Base.draw_text("money : ", self.money,
                        " | happiness : ", self.happiness,
                        " | power : ", self.power)
-        Base.draw_text("-"*40)
 
