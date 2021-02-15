@@ -20,5 +20,6 @@ class EventFactory:
         :return:
         """
         event = random.choice(self.events)
+        result = event.generate()
         Base.draw_text(event)
-        return event.generate()
+        return result
