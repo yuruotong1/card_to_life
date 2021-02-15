@@ -1,0 +1,21 @@
+- name: 买房子
+  change:
+    money: -1000000
+    happiness: 10
+
+- name: 买手机
+  change:
+    money: -5000
+    happiness: 2
+
+- name: 认真学习
+  change:
+    money: -1
+    happiness: -1
+    power: 1
+
+- name: 创建企业
+  change:
+    money: 1000
+    happiness: -30
+    power: 2

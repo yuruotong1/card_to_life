@@ -1,6 +1,8 @@
 import random
 from typing import List
 
+import yaml
+
 from main.base import Base
 from main.event.event import Event
 from main.indicator.indicator_factory import IndicatorFactory
@@ -12,7 +14,19 @@ class EventFactory:
         self.indicator = indicator
 
     def register(self, event):
-        self.events.append(event(self.indicator))
+        self.events.append(event)
+
+    def register_from_file(self, path):
+        """
+        从文件中提取事件
+        :param path:
+        :return:
+        """
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.load(f)
+        for i in data:
+            event = Event(self.indicator, i.get("name"), i.get("change"))
+            self.register(event)
 
     def get_event(self):
         """
@@ -20,6 +34,6 @@ class EventFactory:
         :return:
         """
         event = random.choice(self.events)
-        result = event.generate()
+        result = event.change_from_dict()
         Base.draw_text(event)
         return result
