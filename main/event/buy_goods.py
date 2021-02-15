@@ -1,15 +1,16 @@
 from main.event.event import Event
-from main.indicator import Indicator
+from main.indicator.indicator_factory import IndicatorFactory
 
 
 class BuyGoods(Event):
     """
     买物品
     """
-    NAME = "买手机"
-    INFO = "金钱 -10，幸福 +5"
+    NAME = "买房子"
+    INFO = "金钱 -1000000，幸福 +5"
 
-    def __init__(self, indicator: Indicator):
+    def __init__(self, indicator: IndicatorFactory):
+        super().__init__(indicator)
         self.indicator = indicator
 
     def generate(self):
@@ -18,5 +19,5 @@ class BuyGoods(Event):
         物品包括：奢饰品，汽车
         :return:
         """
-        self.indicator.money -= 10
-        self.indicator.happiness += 5
+        self.change(self.indicator.money, -1000000)
+        self.change(self.indicator.happiness, 5)

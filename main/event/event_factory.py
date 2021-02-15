@@ -3,11 +3,11 @@ from typing import List
 
 from main.base import Base
 from main.event.event import Event
-from main.indicator import Indicator
+from main.indicator.indicator_factory import IndicatorFactory
 
 
 class EventFactory:
-    def __init__(self, indicator: Indicator):
+    def __init__(self, indicator: IndicatorFactory):
         self.events: List[Event] = []
         self.indicator = indicator
 

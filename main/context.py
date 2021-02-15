@@ -1,5 +1,5 @@
 from main.base import Base
-from main.indicator import Indicator
+from main.indicator.indicator_factory import IndicatorFactory
 from main.role.role import Role
 
 
@@ -15,7 +15,7 @@ class Context:
     def __init__(self):
         # 当前角色
         self.profession = Role()
-        self.indicator = Indicator()
+        self.indicator = IndicatorFactory()
         # 回合数，每 5 回合完成一个周期（一岁）
         self.bout = self.ROUND_CYCLE
         # 年龄
@@ -45,7 +45,6 @@ class Context:
         else:
             self.bout -= 1
         self._show_bout()
-
 
     def _show_bout(self):
         """

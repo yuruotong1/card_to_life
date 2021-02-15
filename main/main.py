@@ -31,5 +31,5 @@ class Main:
             elif self.context.bout == 0:
                 salary = self.context.profession.get_salary()
                 Base.draw_text("发工资：" + str(salary))
-                self.context.indicator.money += self.context.profession.get_salary()
+                self.context.indicator.money.change(self.context.profession.get_salary())
             Base.draw_text("-" * 40)

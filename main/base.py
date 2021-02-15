@@ -17,6 +17,8 @@ class Base:
         if isinstance(content, list):
             content = [str(i) + "," + str(j) for i, j in enumerate(content)]
             content = "\n".join(content)
+        elif not isinstance(content, str):
+            content = str(content)
         # 如果存在位置参数，与　content 合并
         if args:
             args = [str(i) for i in args]
