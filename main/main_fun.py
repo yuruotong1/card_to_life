@@ -17,19 +17,34 @@ class Main:
         while True:
             # 显示指标
             self.context.indicator.show_indicator()
-            self.event_factory.get_event()
+            result = self.event_factory.get_event()
+            if result:
+                Base.draw_text("操作成功")
+            else:
+                Base.draw_text("放弃操作")
             # 回合数加 1
             self.context.iteration_bout()
             # 如果到达 100 岁，结束游戏
             if self.context.age == 100:
                 return
-            # 每回合结束，发工资
+            # 每回合结束进行清算
             elif self.context.bout == 0:
+                # 发工资
                 salary = self.context.profession.get_salary()
                 Base.draw_text("发工资：" + str(salary))
                 self.context.indicator.money.change(self.context.profession.get_salary())
+                # 偿还贷款
+                for index, loan in enumerate(self.context.profession.loan):
+                    # 如果贷款还完，就从贷款列表中清空
+                    if loan.get("time") == 0:
+                        self.context.profession.loan.pop(index)
+                        break
+                    Base.draw_text(f"还{loan.get('describe')}贷款：" + str(loan.get("money")))
+                    self.context.indicator.money.change(-loan.get("money"))
+                    loan["time"] -= 1
+
             Base.draw_text("-" * 40)
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     Main().main()

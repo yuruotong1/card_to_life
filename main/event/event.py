@@ -1,4 +1,6 @@
+from main.base import Base
 from main.indicator.indicator_factory import IndicatorFactory
+from main.page.bank_page import BankPage
 
 
 class Event:
@@ -15,8 +17,6 @@ class Event:
         :param value: 要修改的指标，比如 {"money": -1000000, "happiness": 5}
         """
         self.indicator = indicator
-        # 存放当前事件是什么，比如加钱，减幸福
-        self.content = {}
         self.NAME = name
         self.value = value
 
@@ -28,26 +28,38 @@ class Event:
         """
         if value is None:
             value = self.value
+
+        # 可反复借贷，直到钱够了为止
+        while True:
+            Base.draw_text("事件：" + self.NAME + " " + str(self.value))
+            operation = Base.input_text(f"是否要进行操作：\n0，是，1，否")
+            if operation == "1":
+                return False
+            # 如果钱不够，使用贷款
+            if "money" in value and self.indicator.money.value + value.get("money") < 0:
+                is_loan = Base.input_text(f"钱不够，是否要：\n0，使用贷款，1，放弃购买")
+                if is_loan == "1":
+                    return False
+                elif is_loan == "0":
+                    # 进行贷款
+                    BankPage(self.indicator.money).loan(self.NAME)
+            else:
+                break
+
         for index_name, index_value in value.items():
             self.change(index_name, index_value)
+        return True
 
-    def change(self, name, value):
+    def change(self, index_name, index_value):
         """
         找到对应指标并修改
-        :param name:
-        :param value:
+        :param index_name: 要修改的指标名
+        :param index_value: 要修改的指标值
         :return:
         """
 
-        # 如果已经有值，不进行处理
-        if name in self.content:
-            return
-
         # 从指标列表中找符合要求的指标，进行修改
         for index in self.indicator.tags:
-            if index.NAME == name:
-                self.content.update(index.change(value))
-
-    def __str__(self):
-        result = self.NAME + " " + str(self.content)
-        return result
+            if index.NAME == index_name:
+                index.change(index_value, self.NAME)
+        return True

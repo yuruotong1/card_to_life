@@ -1,6 +1,6 @@
 - name: 买房子
   change:
-    money: -1000000
+    money: -100000
     happiness: 10
 
 - name: 买手机

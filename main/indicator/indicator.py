@@ -10,9 +10,15 @@ class Indicator:
     def __init__(self):
         self.value = 0
 
-    def change(self, value):
+    def change(self, value, describe=""):
+        """
+        修改指标
+        :param describe: 操作描述，比如买手机
+        :param value:
+        :return:
+        """
         self.value += value
-        return {self.NAME: value}
+        return True
 
     def __str__(self):
         return self.NAME + "：" + str(self.value)

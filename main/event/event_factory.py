@@ -23,7 +23,7 @@ class EventFactory:
         :return:
         """
         with open(path, "r", encoding="utf-8") as f:
-            data = yaml.load(f)
+            data = yaml.safe_load(f)
         for i in data:
             event = Event(self.indicator, i.get("name"), i.get("change"))
             self.register(event)
@@ -35,5 +35,4 @@ class EventFactory:
         """
         event = random.choice(self.events)
         result = event.change_from_dict()
-        Base.draw_text(event)
         return result

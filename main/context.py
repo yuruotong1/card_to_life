@@ -11,16 +11,18 @@ class Context:
     K_REAPPEAR = "#"
     ROUND_CYCLE = 5
     INTIAL_AGE = 20
+    # 当前角色
+    profession = Role()
 
     def __init__(self):
-        # 当前角色
-        self.profession = Role()
+
         self.indicator = IndicatorFactory()
         # 回合数，每 5 回合完成一个周期（一岁）
         self.bout = self.ROUND_CYCLE
         # 年龄
         self.age = self.INTIAL_AGE
 
+    @classmethod
     def set_profession(self, professtion):
         """
         设置当前职业
@@ -30,6 +32,7 @@ class Context:
         Base.draw_text(professtion)
         self.profession = professtion
 
+    @classmethod
     def get_profession(self):
         return self.profession
 
